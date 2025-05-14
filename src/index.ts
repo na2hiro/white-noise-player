@@ -1,8 +1,6 @@
 import fs from "fs";
 import path from "path";
 import readline from "readline";
-import ffmpegPath from "ffmpeg-static";
-import ffmpeg from "fluent-ffmpeg";
 import { fileURLToPath } from "url";
 import { dirname } from "path";
 import { spawn } from "child_process";
