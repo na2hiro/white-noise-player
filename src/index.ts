@@ -26,14 +26,15 @@ const getMp3Files = () =>
 const pickRandom = <T>(arr: T[]): T =>
     arr[Math.floor(Math.random() * arr.length)];
 
-function startPlayback() {
+function startPlayback(): string | undefined {
     const files = getMp3Files();
     if (!files.length) {
         console.error("❌ No MP3 files found in ./music");
         return;
     }
 
-    const inputFile = path.join(MUSIC_DIR, pickRandom(files));
+    const selectedFile = pickRandom(files);
+    const inputFile = path.join(MUSIC_DIR, selectedFile);
 
     const fadeIn = `afade=t=in:ss=0:d=${FADE_DURATION}`;
     // We'll only use fade-in for now, as we'll handle fade-out differently
@@ -53,13 +54,18 @@ function startPlayback() {
         }
 
         // Restart playback when the current file ends
-        if (isPlaying) startPlayback();
+        if (isPlaying) {
+            const newFileName = startPlayback();
+            console.log(`🎵 Playing next file: ${newFileName}`);
+        }
     });
 
     timeout = setTimeout(() => {
         console.log("🛑 Auto-stopping after 1.5h");
         stopPlayback();
     }, DEFAULT_DURATION_MS);
+
+    return selectedFile;
 }
 
 function stopPlayback() {
@@ -87,9 +93,9 @@ function togglePlayback() {
         console.log("🔇 Stopping...");
         stopPlayback();
     } else {
-        console.log("🎵 Starting...");
         isPlaying = true;
-        startPlayback();
+        const fileName = startPlayback();
+        console.log(`🎵 Starting... Playing: ${fileName}`);
     }
 }
 
