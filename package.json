@@ -11,8 +11,10 @@
     "play-sound": "^1.1.6"
   },
   "devDependencies": {
-    "@types/node": "^22.15.17",
-    "typescript": "^5.5.3"
+    "@types/node": "^22.15.29",
+    "@types/play-sound": "^1.1.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
   },
   "private": true
 }
